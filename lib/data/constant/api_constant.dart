@@ -2,7 +2,7 @@ class ApiConstant {
   static const String _baseUrl = 'https://myFevTempV1.com/';
   // static const String _baseUrl =
   //     'https://tobago-jury-witch-html.trycloudflare.com/';
-  static get baseUrl => _baseUrl;
+  static String get baseUrl => _baseUrl;
 
   // login --
   static const String sendOtp = '/api/LoginAPI/CustomerSendOtp';

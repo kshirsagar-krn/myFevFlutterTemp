@@ -4,7 +4,7 @@ import '../../generated/assets.dart';
 class DataActivity {
   // emptyData --
   static Widget emptyData(
-    context, {
+    BuildContext context, {
     String? imgName,
     String? title,
     String? subtitle,
@@ -32,7 +32,7 @@ class DataActivity {
 
   // something went wrong -- >
   static Widget somethingWentWrong(
-    context, {
+    BuildContext context, {
     String? imgName,
     String? title,
     String? subtitle,

@@ -12,7 +12,7 @@ import '../screens/splash_screen.dart';
 import 'custom_button.dart';
 
 class LogOutDialogue {
-  static dialogue(context) {
+  static Future<dynamic> dialogue(BuildContext context) {
     return showModalBottomSheet(
       backgroundColor: Colors.transparent,
       context: context,

@@ -123,7 +123,7 @@ class _CustomImagePickerState extends State<CustomImagePicker> {
     if (!widget.fieldEnable) return;
 
     try {
-      final result = await FilePicker.platform.pickFiles(
+      final result = await FilePicker.pickFiles(
         type: FileType.custom,
         allowedExtensions: ['jpg', 'png', 'jpeg', 'pdf', 'doc', 'docx'],
         allowMultiple: widget.multiImageReq,

@@ -203,7 +203,7 @@ class _GenericSearchScreenState<T> extends State<GenericSearchScreen<T>> {
     if (_filtered.isEmpty) return _buildEmptyState();
     return ListView.separated(
       itemCount: _filtered.length,
-      separatorBuilder: (_, __) =>
+      separatorBuilder: (_, _) =>
           Divider(color: Colors.grey.shade100, height: 1),
       itemBuilder: (context, index) {
         final item = _filtered[index];

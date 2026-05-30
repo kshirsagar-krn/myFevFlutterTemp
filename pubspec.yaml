@@ -27,14 +27,14 @@ dependencies:
   shimmer: ^3.0.0
   cached_network_image: ^3.4.1
   flutter_lucide: ^1.8.2
-  file_picker: ^10.3.10
+  file_picker: ^11.0.2
   flutter_pdfview: ^1.4.4
   photo_view: ^0.15.0
   syncfusion_flutter_pdfviewer: ^33.1.45
   flutter_bloc: ^9.1.1
   flutter_svg: ^2.2.4
   qr_flutter: ^4.1.0
-  fluttertoast: ^8.2.7
+  fluttertoast: ^9.1.0
   device_info_plus: ^12.3.0
   uuid: ^4.5.3
   http: ^1.2.1
@@ -51,7 +51,7 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
 
-  flutter_lints: ^5.0.0
+  flutter_lints: ^6.0.0
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
