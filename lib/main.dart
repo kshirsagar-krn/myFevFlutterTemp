@@ -3,6 +3,7 @@ import 'package:myFevTempV1/presentation/bloc/dropdown/city/city_bloc.dart';
 import 'package:myFevTempV1/presentation/bloc/dropdown/country/country_bloc.dart';
 import 'package:myFevTempV1/presentation/bloc/dropdown/gender/gender_bloc.dart';
 import 'package:myFevTempV1/presentation/bloc/dropdown/states/statas_bloc.dart';
+import 'package:myFevTempV1/presentation/bloc/theme/theme_cubit.dart';
 import 'package:myFevTempV1/presentation/screens/splash_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -25,6 +26,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
+        BlocProvider<ThemeCubit>(create: (context) => ThemeCubit()),
         BlocProvider<LoginBloc>(create: (context) => LoginBloc(AuthRepo())),
         BlocProvider<CountryBloc>(
           create: (context) => CountryBloc(DropdownRepo()),
@@ -37,13 +39,17 @@ class MyApp extends StatelessWidget {
           create: (context) => GenderBloc(DropdownRepo()),
         ),
       ],
-      child: MaterialApp(
-        debugShowCheckedModeBanner: false,
-        title: 'MyFev Template',
-        themeMode: ThemeMode.light,
-        theme: AppThemes.lightTheme,
-        darkTheme: AppThemes.darkTheme,
-        home: SplashScreen(),
+      child: BlocBuilder<ThemeCubit, ThemeMode>(
+        builder: (context, themeMode) {
+          return MaterialApp(
+            debugShowCheckedModeBanner: false,
+            title: 'MyFev Template',
+            themeMode: themeMode,
+            theme: AppThemes.lightTheme,
+            darkTheme: AppThemes.darkTheme,
+            home: const SplashScreen(),
+          );
+        },
       ),
     );
   }

@@ -7,7 +7,7 @@ import 'package:myFevTempV1/data/models/gender_model.dart';
 import 'package:myFevTempV1/data/models/state_model.dart';
 import 'package:myFevTempV1/data/models/user_model.dart';
 import 'package:myFevTempV1/domain/repo/auth_repo.dart';
-import 'package:myFevTempV1/domain/use_cases/extrta_methods.dart';
+import 'package:myFevTempV1/domain/use_cases/extra_methods.dart';
 import 'package:myFevTempV1/presentation/bloc/dropdown/city/city_bloc.dart';
 import 'package:myFevTempV1/presentation/bloc/dropdown/city/city_event.dart';
 import 'package:myFevTempV1/presentation/bloc/dropdown/city/city_state.dart';
@@ -332,7 +332,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     style: context.sublabel.copyWith(
                       fontSize: 14,
                       height: 1.4,
-                      color: context.textLabelolor,
+                      color: context.textLabelColor,
                     ),
                   ),
                   const SizedBox(height: 30),
@@ -648,7 +648,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     style: context.sublabel.copyWith(
                       fontSize: 14,
                       height: 1.4,
-                      color: context.textLabelolor,
+                      color: context.textLabelColor,
                     ),
                   ),
                   const SizedBox(height: 30),

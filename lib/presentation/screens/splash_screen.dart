@@ -1,6 +1,6 @@
 import 'package:myFevTempV1/data/constant/app_color.dart';
 import 'package:myFevTempV1/data/constant/app_text_style.dart';
-import 'package:myFevTempV1/domain/use_cases/extrta_methods.dart';
+import 'package:myFevTempV1/domain/use_cases/extra_methods.dart';
 import 'package:myFevTempV1/presentation/screens/log/login_screen.dart';
 import 'package:flutter/material.dart';
 import '../../domain/repo/auth_repo.dart';
@@ -80,7 +80,7 @@ class _SplashScreenState extends State<SplashScreen> {
             Text(
               "Follow me krn-kshirsagar@github",
               style: context.label.copyWith(
-                color: context.textLabelolor,
+                color: context.textLabelColor,
                 fontWeight: FontWeight.w400,
               ),
             ),

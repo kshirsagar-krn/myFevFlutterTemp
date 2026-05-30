@@ -1,5 +1,5 @@
 // ignore_for_file: constant_identifier_names
-import 'package:myFevTempV1/domain/use_cases/extrta_methods.dart';
+import 'package:myFevTempV1/domain/use_cases/extra_methods.dart';
 import 'package:flutter/material.dart';
 import 'package:tab_indicator_styler/tab_indicator_styler.dart';
 
@@ -89,7 +89,7 @@ extension AppThemeExtension on BuildContext {
   Color get textSecondaryColor => _dark
       ? AppColor.textSecondaryDark
       : AppColor.textSecondaryLight.lighten(0.03);
-  Color get textLabelolor =>
+  Color get textLabelColor =>
       _dark ? AppColor.subLabelDark : AppColor.subLabelLight;
 
   // widget color --

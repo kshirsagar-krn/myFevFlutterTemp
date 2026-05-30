@@ -46,8 +46,8 @@ class AppCustomdialogues {
       barrierDismissible:
           !forceUpdate, // Prevent closing dialog on force update
       builder: (context) {
-        return WillPopScope(
-          onWillPop: () async => !forceUpdate, // Disable back button
+        return PopScope(
+          canPop: !forceUpdate, // Disable back button when force update is active
           child: Dialog(
             backgroundColor: Colors.white,
             shape: RoundedRectangleBorder(
@@ -149,8 +149,8 @@ class AppCustomdialogues {
     await showDialog(
       context: context,
       builder: (context) {
-        return WillPopScope(
-          onWillPop: () async => false, // Disable back button
+        return PopScope(
+          canPop: false, // Disable back button during maintenance
           child: Dialog(
             backgroundColor: Colors.white,
             shape: RoundedRectangleBorder(

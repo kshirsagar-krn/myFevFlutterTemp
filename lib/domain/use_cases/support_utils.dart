@@ -114,8 +114,10 @@ class SupportUtils {
     try {
       if (filePaths != null && filePaths.isNotEmpty) {
         final files = filePaths.map((path) => XFile(path)).toList();
+        // ignore: deprecated_member_use
         await Share.shareXFiles(files, text: text, subject: subject);
       } else {
+        // ignore: deprecated_member_use
         await Share.share(text ?? '', subject: subject);
       }
     } catch (e) {

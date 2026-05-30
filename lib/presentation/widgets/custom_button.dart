@@ -3,7 +3,7 @@ import '../../data/constant/app_color.dart';
 
 enum CustomButtonStyle { fill, outline, text }
 
-class CustomButton extends StatelessWidget {
+class CustomButton extends StatefulWidget {
   final String? text;
   final Widget? child;
   final VoidCallback onTap;
@@ -13,7 +13,7 @@ class CustomButton extends StatelessWidget {
   // Style properties
   final CustomButtonStyle style;
   final Color? backgroundColor;
-  final Gradient? gradient; // Added optional gradient
+  final Gradient? gradient; 
   final Color? textColor;
   final Color? borderColor;
 
@@ -36,7 +36,7 @@ class CustomButton extends StatelessWidget {
     this.isEnabled = true,
     this.style = CustomButtonStyle.fill,
     this.backgroundColor,
-    this.gradient, // Added to constructor
+    this.gradient, 
     this.textColor,
     this.borderColor,
     this.disabledBackgroundColor = const Color(0xFFE2E8F0),
@@ -49,8 +49,56 @@ class CustomButton extends StatelessWidget {
   });
 
   @override
+  State<CustomButton> createState() => _CustomButtonState();
+}
+
+class _CustomButtonState extends State<CustomButton> with SingleTickerProviderStateMixin {
+  late AnimationController _animationController;
+  late Animation<double> _scaleAnimation;
+
+  @override
+  void initState() {
+    super.initState();
+    _animationController = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 100),
+      lowerBound: 0.96, // Scale down to 96%
+      upperBound: 1.0,
+    )..value = 1.0;
+
+    _scaleAnimation = CurvedAnimation(
+      parent: _animationController,
+      curve: Curves.easeInOut,
+    );
+  }
+
+  @override
+  void dispose() {
+    _animationController.dispose();
+    super.dispose();
+  }
+
+  void _onTapDown(TapDownDetails details) {
+    if (widget.isEnabled && !widget.isLoading) {
+      _animationController.reverse(); // Scale down
+    }
+  }
+
+  void _onTapUp(TapUpDetails details) {
+    if (widget.isEnabled && !widget.isLoading) {
+      _animationController.forward(); // Scale up
+    }
+  }
+
+  void _onTapCancel() {
+    if (widget.isEnabled && !widget.isLoading) {
+      _animationController.forward(); // Scale up
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
-    final bool canTap = isEnabled && !isLoading;
+    final bool canTap = widget.isEnabled && !widget.isLoading;
 
     // Resolve colors based on current style and state
     Color? effectiveBgColor;
@@ -58,70 +106,85 @@ class CustomButton extends StatelessWidget {
     Color effectiveBorderColor;
     Gradient? effectiveGradient;
 
-    switch (style) {
+    switch (widget.style) {
       case CustomButtonStyle.fill:
         effectiveBgColor = canTap
-            ? (backgroundColor ?? AppColor.primaryColor)
-            : disabledBackgroundColor;
+            ? (widget.backgroundColor ?? AppColor.primaryColor)
+            : widget.disabledBackgroundColor;
         effectiveTextColor = canTap
-            ? (textColor ?? Colors.white)
-            : disabledTextColor;
+            ? (widget.textColor ?? Colors.white)
+            : widget.disabledTextColor;
         effectiveBorderColor = Colors.transparent;
-        // Only apply the gradient if the button is enabled and active
-        effectiveGradient = canTap ? gradient : null;
+        effectiveGradient = canTap ? widget.gradient : null;
         break;
 
       case CustomButtonStyle.outline:
         effectiveBgColor = Colors.transparent;
         effectiveTextColor = canTap
-            ? (textColor ?? AppColor.primaryColor)
-            : disabledTextColor;
+            ? (widget.textColor ?? AppColor.primaryColor)
+            : widget.disabledTextColor;
         effectiveBorderColor = canTap
-            ? (borderColor ?? AppColor.primaryColor)
-            : disabledBorderColor;
+            ? (widget.borderColor ?? AppColor.primaryColor)
+            : widget.disabledBorderColor;
         effectiveGradient = null;
         break;
 
       case CustomButtonStyle.text:
         effectiveBgColor = Colors.transparent;
         effectiveTextColor = canTap
-            ? (textColor ?? AppColor.primaryColor)
-            : disabledTextColor;
+            ? (widget.textColor ?? AppColor.primaryColor)
+            : widget.disabledTextColor;
         effectiveBorderColor = Colors.transparent;
         effectiveGradient = null;
         break;
     }
 
-    return GestureDetector(
-      onTap: canTap ? onTap : null,
-      child: Opacity(
-        // Subtle feedback for disabled state
-        opacity: canTap ? 1.0 : 0.7,
-        child: Container(
-          height: height,
-          alignment: Alignment.center,
-          padding: const EdgeInsets.symmetric(horizontal: 16),
-          decoration: BoxDecoration(
-            // If a gradient is active, color must be null to avoid conflicts in BoxDecoration
-            color: effectiveGradient == null ? effectiveBgColor : null,
-            gradient: effectiveGradient,
-            borderRadius: BorderRadius.circular(borderRadius),
-            border: style == CustomButtonStyle.outline
-                ? Border.all(color: effectiveBorderColor, width: borderWidth)
-                : null,
+    return ScaleTransition(
+      scale: _scaleAnimation,
+      child: GestureDetector(
+        onTapDown: _onTapDown,
+        onTapUp: _onTapUp,
+        onTapCancel: _onTapCancel,
+        onTap: canTap ? widget.onTap : null,
+        child: AnimatedOpacity(
+          duration: const Duration(milliseconds: 150),
+          opacity: canTap ? 1.0 : 0.6,
+          child: Container(
+            height: widget.height,
+            decoration: BoxDecoration(
+              color: effectiveGradient == null ? effectiveBgColor : null,
+              gradient: effectiveGradient,
+              borderRadius: BorderRadius.circular(widget.borderRadius),
+              border: widget.style == CustomButtonStyle.outline
+                  ? Border.all(color: effectiveBorderColor, width: widget.borderWidth)
+                  : null,
+            ),
+            child: Material(
+              color: Colors.transparent,
+              child: InkWell(
+                onTap: canTap ? widget.onTap : null,
+                splashColor: effectiveTextColor.withOpacity(0.12),
+                highlightColor: effectiveTextColor.withOpacity(0.06),
+                borderRadius: BorderRadius.circular(widget.borderRadius),
+                child: Container(
+                  alignment: Alignment.center,
+                  padding: const EdgeInsets.symmetric(horizontal: 16),
+                  child: widget.isLoading
+                      ? (widget.loadingWidget ?? _buildDefaultLoading(effectiveTextColor))
+                      : (widget.child ??
+                            Text(
+                              widget.text ?? '',
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                color: effectiveTextColor,
+                                fontSize: 16,
+                                fontWeight: FontWeight.w600,
+                              ),
+                            )),
+                ),
+              ),
+            ),
           ),
-          child: isLoading
-              ? (loadingWidget ?? _buildDefaultLoading(effectiveTextColor))
-              : (child ??
-                    Text(
-                      text ?? '',
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        color: effectiveTextColor,
-                        fontSize: 16,
-                        fontWeight: FontWeight.w600,
-                      ),
-                    )),
         ),
       ),
     );

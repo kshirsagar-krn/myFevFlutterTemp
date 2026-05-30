@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import '../../../../data/models/country_flag_model.dart';
 import '../../../../data/models/country_model.dart';
 
 @immutable

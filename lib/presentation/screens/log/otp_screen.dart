@@ -76,7 +76,7 @@ class _OtpScreenState extends State<OtpScreen> {
                   style: context.sublabel.copyWith(
                     fontSize: 14,
                     height: 1.4,
-                    color: context.textLabelolor,
+                    color: context.textLabelColor,
                   ),
                 ),
                 const SizedBox(height: 30),

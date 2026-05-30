@@ -1,5 +1,4 @@
 import 'dart:ui';
-
 import 'package:flutter/material.dart';
 
 class CustomDottedBorder extends StatelessWidget {
@@ -9,7 +8,8 @@ class CustomDottedBorder extends StatelessWidget {
   final Color color;
   final double strokeWidth;
   final List<double> dashPattern; // [dashWidth, dashSpace]
-  final bool isHorizontal;
+  final bool isLine;              // If true, draws a single line; if false, draws a rectangle border
+  final bool isHorizontal;        // Only used if isLine is true
   final EdgeInsets padding;
   final BorderRadius? borderRadius;
 
@@ -21,6 +21,7 @@ class CustomDottedBorder extends StatelessWidget {
     this.color = Colors.black,
     this.strokeWidth = 2,
     this.dashPattern = const [4, 6], // Default: 4px dash, 6px space
+    this.isLine = false,
     this.isHorizontal = true,
     this.padding = EdgeInsets.zero,
     this.borderRadius,
@@ -37,6 +38,7 @@ class CustomDottedBorder extends StatelessWidget {
           color: color,
           strokeWidth: strokeWidth,
           dashPattern: dashPattern,
+          isLine: isLine,
           isHorizontal: isHorizontal,
           borderRadius: borderRadius,
         ),
@@ -50,6 +52,7 @@ class _DottedBorderPainter extends CustomPainter {
   final Color color;
   final double strokeWidth;
   final List<double> dashPattern;
+  final bool isLine;
   final bool isHorizontal;
   final BorderRadius? borderRadius;
 
@@ -57,6 +60,7 @@ class _DottedBorderPainter extends CustomPainter {
     required this.color,
     required this.strokeWidth,
     required this.dashPattern,
+    required this.isLine,
     required this.isHorizontal,
     this.borderRadius,
   });
@@ -68,12 +72,12 @@ class _DottedBorderPainter extends CustomPainter {
       ..strokeWidth = strokeWidth
       ..style = PaintingStyle.stroke;
 
-    if (borderRadius != null) {
-      // Draw dotted border around the entire container
-      _drawDottedRect(canvas, size, paint);
-    } else {
+    if (isLine) {
       // Draw simple horizontal or vertical line
       _drawDottedLine(canvas, size, paint);
+    } else {
+      // Draw dotted border around the entire container
+      _drawDottedRect(canvas, size, paint);
     }
   }
 
@@ -105,7 +109,8 @@ class _DottedBorderPainter extends CustomPainter {
 
   void _drawDottedRect(Canvas canvas, Size size, Paint paint) {
     final rect = Offset.zero & size;
-    final path = Path()..addRRect(borderRadius!.toRRect(rect));
+    final rrect = (borderRadius ?? BorderRadius.zero).toRRect(rect);
+    final path = Path()..addRRect(rrect);
 
     // Extract path metrics for dotted effect
     final metrics = path.computeMetrics().toList();
@@ -136,6 +141,7 @@ class _DottedBorderPainter extends CustomPainter {
     return oldDelegate.color != color ||
         oldDelegate.strokeWidth != strokeWidth ||
         oldDelegate.dashPattern != dashPattern ||
+        oldDelegate.isLine != isLine ||
         oldDelegate.isHorizontal != isHorizontal ||
         oldDelegate.borderRadius != borderRadius;
   }

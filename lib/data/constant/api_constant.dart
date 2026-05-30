@@ -21,7 +21,7 @@ class ApiConstant {
   static const String fetchCountry =
       '/api/MasterAPI/dataList?Table=TBL_COUNTRYMASTER&Columns=COUNTRYID, COUNTRYNAME';
   static const String fetchState =
-      'https://www.myFevTempV1.com/api/MasterAPI/dataList?Table=TBL_STATEMASTER&Columns=STATEID, STATENAME&WhereColumn=COUNTRYID&WhereValue='; // &WhereValue=
+      '/api/MasterAPI/dataList?Table=TBL_STATEMASTER&Columns=STATEID, STATENAME&WhereColumn=COUNTRYID&WhereValue='; // &WhereValue=
   static const String fetchCity =
       '/api/MasterAPI/dataList?Table=TBL_CITYMASTER&Columns=CITYID, CITYNAME&WhereColumn=STATEID&WhereValue=';
   static const String fetchGender =

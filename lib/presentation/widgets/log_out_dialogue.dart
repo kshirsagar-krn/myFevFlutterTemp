@@ -6,7 +6,6 @@ import 'package:flutter_svg/flutter_svg.dart';
 import '../../data/constant/app_color.dart';
 import '../../domain/repo/auth_repo.dart';
 import '../../generated/assets.dart';
-import '../bloc/log/log_in/bloc_event.dart';
 import '../bloc/log/log_in/bloc_log.dart';
 import '../bloc/log/log_in/bloc_state.dart';
 import '../screens/splash_screen.dart';
@@ -86,11 +85,11 @@ class LogOutDialogue {
                               //   if (!context.mounted) return;
                               //   context.read<LoginBloc>().add(LogOutProfile());
                               // }
+                              final navigator = Navigator.of(context);
                               await AuthRepo().clearStoredCredentials();
-                              Navigator.pushAndRemoveUntil(
-                                context,
+                              navigator.pushAndRemoveUntil(
                                 MaterialPageRoute(
-                                  builder: (context) => SplashScreen(),
+                                  builder: (context) => const SplashScreen(),
                                 ),
                                 (context) => false,
                               );
