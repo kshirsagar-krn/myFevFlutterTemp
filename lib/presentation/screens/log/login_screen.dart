@@ -14,9 +14,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_lucide/flutter_lucide.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import '../../../data/models/country_flag_model.dart';
+import '../../../data/models/country_model.dart';
 import '../../bloc/log/log_in/bloc_event.dart';
 import '../../widgets/custom_image.dart';
-// import 'country_search.dart';
+import 'country_search.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -118,23 +119,29 @@ class _LoginScreenState extends State<LoginScreen> {
                       ),
                       const SizedBox(height: 6),
                       TextField(
-                        enabled: false,
+                        // enabled: false,
                         readOnly: true,
-                        // onTap: () {
-                        //   Navigator.push(
-                        //     context,
-                        //     MaterialPageRoute(
-                        //       builder: (context) => CountrySearchScreen(
-                        //         selectedCountry: selectedCountry,
-                        //         onCountrySelected: (CountryModel p1) {
-                        //           setState(() {
-                        //             selectedCountry = p1;
-                        //           });
-                        //         },
-                        //       ),
-                        //     ),
-                        //   );
-                        // },
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => CountrySearchScreen(
+                                selectedCountry: selectedCountry,
+                                onCountrySelected: (p0) {
+                                  setState(() {
+                                    selectedCountry = p0;
+                                    phoneController.clear();
+                                  });
+                                },
+                                // onCountrySelected: (CountryModel p1) {
+                                //   setState(() {
+                                //     selectedCountry = p1;
+                                //   });
+                                // },
+                              ),
+                            ),
+                          );
+                        },
                         keyboardType: TextInputType.number,
                         controller: TextEditingController(
                           text:

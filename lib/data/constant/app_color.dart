@@ -1,7 +1,6 @@
 // ignore_for_file: constant_identifier_names
 import 'package:myFevTempV1/domain/use_cases/extra_methods.dart';
 import 'package:flutter/material.dart';
-import 'package:tab_indicator_styler/tab_indicator_styler.dart';
 
 class AppColor {
   // --- Brand Colors (Tailwind-inspired Slate & Blue) ---
@@ -38,13 +37,6 @@ class AppColor {
     Color(0xff6366F1), // Govt. Offices
     Color(0xffA855F7), // Shopping Centres
   ];
-
-  // --- Tab Indicator Styling ---
-  static MaterialIndicator tabIndicator = MaterialIndicator(
-    tabPosition: TabPosition.bottom,
-    height: 3,
-    color: Colors.white,
-  );
 
   // --- Light Theme Colors ---
   static const Color lightBackground = Color(0xFFF8FAFC);

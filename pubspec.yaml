@@ -16,7 +16,6 @@ dependencies:
     sdk: flutter
 
   cupertino_icons: ^1.0.8
-  tab_indicator_styler: ^2.0.0
   dio: ^5.9.2
   hive: ^2.2.3
   path_provider: ^2.1.5
@@ -35,12 +34,10 @@ dependencies:
   syncfusion_flutter_pdfviewer: ^33.1.45
   flutter_bloc: ^9.1.1
   flutter_svg: ^2.2.4
-  qr_flutter: ^4.1.0
   fluttertoast: ^9.1.0
   device_info_plus: ^12.3.0
   uuid: ^4.5.3
   http: ^1.2.1
-  bloc: ^9.2.0
   # workmanager_apple: ^0.9.1+2
   # change_app_package_name: ^1.5.0
 
