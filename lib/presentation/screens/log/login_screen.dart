@@ -4,6 +4,8 @@ import 'package:myFevTempV1/data/constant/app_text_style.dart';
 import 'package:myFevTempV1/presentation/bloc/log/log_in/bloc_log.dart';
 import 'package:myFevTempV1/presentation/bloc/log/log_in/bloc_state.dart';
 import 'package:myFevTempV1/presentation/screens/log/otp_screen.dart';
+import 'package:myFevTempV1/presentation/screens/log/sign_up_screen.dart';
+import 'package:myFevTempV1/presentation/localization/app_localizations.dart';
 import 'package:myFevTempV1/presentation/widgets/custom_button.dart';
 import 'package:myFevTempV1/presentation/widgets/custom_decoration.dart';
 import 'package:flutter/material.dart';
@@ -91,7 +93,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     children: [
                       const SizedBox(height: 40),
                       Text(
-                        "Login to your\nAccount",
+                        context.translate("login_title"),
                         style: context.heading.copyWith(
                           fontWeight: FontWeight.bold,
                           fontSize: 34,
@@ -99,7 +101,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       ),
                       const SizedBox(height: 2),
                       Text(
-                        "Enter your phone number. We will send\nyou a confirmation code there",
+                        context.translate("login_subtitle"),
                         textAlign: TextAlign.start,
                         style: context.sublabel.copyWith(
                           fontSize: 14,
@@ -109,7 +111,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       ),
                       const SizedBox(height: 30),
                       Text(
-                        "Select Country".toUpperCase(),
+                        context.translate("select_country"),
                         style: context.label.copyWith(
                           color: context.textSecondaryColor,
                         ),
@@ -157,7 +159,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       ),
                       const SizedBox(height: 20),
                       Text(
-                        "Mobile Number".toUpperCase(),
+                        context.translate("mobile_number"),
                         style: context.label.copyWith(
                           color: context.textSecondaryColor,
                         ),
@@ -166,11 +168,11 @@ class _LoginScreenState extends State<LoginScreen> {
                       TextFormField(
                         validator: (value) {
                           if (value == null || value.isEmpty) {
-                            return 'Please enter your phone number';
+                            return context.translate("enter_phone_err");
                           } else if (value.length < selectedCountry!.minDigit) {
-                            return 'Please enter a valid phone number';
+                            return context.translate("enter_valid_phone_err");
                           } else if (value.length > selectedCountry!.maxDigit) {
-                            return 'Please enter a valid phone number';
+                            return context.translate("enter_valid_phone_err");
                           }
                           return null;
                         },
@@ -206,12 +208,22 @@ class _LoginScreenState extends State<LoginScreen> {
                         ),
                       ),
                       SizedBox(height: 20),
-                      Text(
-                        "Do not have an account? Sign up",
-                        style: context.label.copyWith(
-                          fontSize: 15,
-                          fontWeight: FontWeight.w600,
-                          color: AppColor.primaryColor,
+                      GestureDetector(
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => const SignUpScreen(),
+                            ),
+                          );
+                        },
+                        child: Text(
+                          context.translate("no_account_signup"),
+                          style: context.label.copyWith(
+                            fontSize: 15,
+                            fontWeight: FontWeight.w600,
+                            color: AppColor.primaryColor,
+                          ),
                         ),
                       ),
                       SizedBox(height: 20),
@@ -253,7 +265,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     mainAxisSize: MainAxisSize.min,
                     children: [
                       Text(
-                        "Send OTP",
+                        context.translate("send_otp"),
                         style: context.subtitle.copyWith(
                           color: AppColor.lightBackground,
                         ),
@@ -279,28 +291,28 @@ class _LoginScreenState extends State<LoginScreen> {
             RichText(
               textAlign: TextAlign.start,
               text: TextSpan(
-                text: "By creating a account, I agree to eSmart Queue ",
+                text: context.translate("terms_agree"),
                 style: context.label.copyWith(
                   fontWeight: FontWeight.w400,
                   color: context.textSecondaryColor,
                 ),
                 children: [
                   TextSpan(
-                    text: "Terms & Services ",
+                    text: context.translate("terms_services"),
                     style: context.label.copyWith(
                       fontWeight: FontWeight.w600,
                       color: context.textPrimaryColor,
                     ),
                   ),
                   TextSpan(
-                    text: "and ",
+                    text: context.translate("and"),
                     style: context.label.copyWith(
                       fontWeight: FontWeight.w400,
                       color: context.textSecondaryColor,
                     ),
                   ),
                   TextSpan(
-                    text: "Privacy Policy",
+                    text: context.translate("privacy_policy"),
                     style: context.label.copyWith(
                       fontWeight: FontWeight.w600,
                       color: context.textPrimaryColor,

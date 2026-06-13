@@ -2,6 +2,7 @@ import 'package:myFevTempV1/data/constant/app_color.dart';
 import 'package:myFevTempV1/data/constant/app_text_style.dart';
 import 'package:myFevTempV1/domain/use_cases/extra_methods.dart';
 import 'package:myFevTempV1/presentation/screens/log/login_screen.dart';
+import 'package:myFevTempV1/presentation/screens/dashboard.dart';
 import 'package:flutter/material.dart';
 import '../../domain/repo/auth_repo.dart';
 
@@ -17,7 +18,7 @@ class _SplashScreenState extends State<SplashScreen> {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      // _checkAuthAndNavigation();
+      _checkAuthAndNavigation();
     });
   }
 
@@ -25,19 +26,19 @@ class _SplashScreenState extends State<SplashScreen> {
     var token = await AuthRepo().getToken();
     if (mounted) {
       if (token != null) {
-        // await Future.delayed(Duration(seconds: 3));
-        // Navigator.pushAndRemoveUntil(
-        //   // ignore: use_build_context_synchronously
-        //   context,
-        //   MaterialPageRoute(builder: (context) => HomeScreen()),
-        //   (con) => false,
-        // );
+        await Future.delayed(const Duration(seconds: 3));
+        if (!mounted) return;
+        Navigator.pushAndRemoveUntil(
+          context,
+          MaterialPageRoute(builder: (context) => const DashboardScreen()),
+          (con) => false,
+        );
       } else {
-        await Future.delayed(Duration(seconds: 3));
+        await Future.delayed(const Duration(seconds: 3));
         Navigator.pushAndRemoveUntil(
           // ignore: use_build_context_synchronously
           context,
-          MaterialPageRoute(builder: (context) => LoginScreen()),
+          MaterialPageRoute(builder: (context) => const LoginScreen()),
           (con) => false,
         );
       }

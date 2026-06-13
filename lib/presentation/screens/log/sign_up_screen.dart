@@ -36,6 +36,8 @@ import '../../widgets/custom_image.dart';
 import '../../widgets/custom_image_picker.dart';
 import '../../widgets/custom_image_viwer.dart';
 import 'login_screen.dart';
+import '../dashboard.dart';
+import 'package:myFevTempV1/presentation/localization/app_localizations.dart';
 
 class SignUpScreen extends StatefulWidget {
   final String? mobileNumber;
@@ -154,7 +156,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         ),
                         SizedBox(width: 4),
                         Text(
-                          "Back",
+                          context.translate("back"),
                           style: context.subtitle.copyWith(
                             color: AppColor.lightBackground,
                           ),
@@ -178,13 +180,14 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         Fluttertoast.showToast(msg: state.message);
                         if (widget.mobileNumber?.isNotEmpty ?? false) {
                           await AuthRepo().saveToken(token: state.userToken!);
-                          // Navigator.pushAndRemoveUntil(
-                          //   context,
-                          //   MaterialPageRoute(
-                          //     builder: (context) => HomeScreen(),
-                          //   ),
-                          //   (context) => false,
-                          // );
+                          if (!context.mounted) return;
+                          Navigator.pushAndRemoveUntil(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => const DashboardScreen(),
+                            ),
+                            (context) => false,
+                          );
                         } else {
                           Navigator.pushAndRemoveUntil(
                             context,
@@ -210,8 +213,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                           ? (pageController.page?.round() ?? 0)
                                           : 0) ==
                                       0
-                                  ? "Next"
-                                  : "Create Account",
+                                  ? context.translate("next")
+                                  : context.translate("create_account"),
                               style: context.subtitle.copyWith(
                                 color: AppColor.lightBackground,
                               ),
@@ -319,7 +322,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 children: [
                   const SizedBox(height: 40),
                   Text(
-                    "Create Account",
+                    context.translate("create_account"),
                     style: context.heading.copyWith(
                       fontWeight: FontWeight.bold,
                       fontSize: 34,
@@ -327,7 +330,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   ),
                   const SizedBox(height: 2),
                   Text(
-                    "Enter your basic details. We will send you a confirmation code there",
+                    context.translate("enter_basic_details"),
                     textAlign: TextAlign.start,
                     style: context.sublabel.copyWith(
                       fontSize: 14,
@@ -635,7 +638,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 children: [
                   const SizedBox(height: 40),
                   Text(
-                    "Address Info",
+                    context.translate("address_info"),
                     style: context.heading.copyWith(
                       fontWeight: FontWeight.bold,
                       fontSize: 34,
@@ -643,7 +646,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   ),
                   const SizedBox(height: 2),
                   Text(
-                    "Enter your Address details. We will send you a confirmation code there",
+                    context.translate("enter_address_details"),
                     textAlign: TextAlign.start,
                     style: context.sublabel.copyWith(
                       fontSize: 14,

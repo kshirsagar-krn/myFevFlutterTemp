@@ -12,7 +12,9 @@ import 'package:fluttertoast/fluttertoast.dart';
 import '../../../domain/repo/auth_repo.dart';
 import '../../widgets/custom_button.dart';
 import '../../widgets/custom_image.dart';
+import '../dashboard.dart';
 import 'sign_up_screen.dart';
+import 'package:myFevTempV1/presentation/localization/app_localizations.dart';
 
 class OtpScreen extends StatefulWidget {
   final String mobileNumber;
@@ -63,7 +65,7 @@ class _OtpScreenState extends State<OtpScreen> {
               children: [
                 const SizedBox(height: 110),
                 Text(
-                  "6-Digit Code",
+                  context.translate("six_digit_code"),
                   style: context.heading.copyWith(
                     fontWeight: FontWeight.bold,
                     fontSize: 34,
@@ -71,7 +73,7 @@ class _OtpScreenState extends State<OtpScreen> {
                 ),
                 const SizedBox(height: 2),
                 Text(
-                  "Code sent to +91 9876543210 unless you\nalredy have a account",
+                  context.translate("code_sent_to", args: {"number": "+91 ${widget.mobileNumber}"}),
                   textAlign: TextAlign.start,
                   style: context.sublabel.copyWith(
                     fontSize: 14,
@@ -95,7 +97,7 @@ class _OtpScreenState extends State<OtpScreen> {
                 ),
                 SizedBox(height: 20),
                 Text(
-                  "Resend Otp? 1.23 Sec.",
+                  context.translate("resend_otp", args: {"time": "1.23"}),
                   style: context.label.copyWith(
                     fontSize: 15,
                     fontWeight: FontWeight.w600,
@@ -120,11 +122,12 @@ class _OtpScreenState extends State<OtpScreen> {
                   Fluttertoast.showToast(msg: state.message);
                   if (state.userToken?.isNotEmpty ?? false) {
                     await AuthRepo().saveToken(token: state.userToken!);
-                    // Navigator.pushAndRemoveUntil(
-                    //   context,
-                    //   MaterialPageRoute(builder: (context) => HomeScreen()),
-                    //   (cnxt) => false,
-                    // );
+                    if (!context.mounted) return;
+                    Navigator.pushAndRemoveUntil(
+                      context,
+                      MaterialPageRoute(builder: (context) => const DashboardScreen()),
+                      (cnxt) => false,
+                    );
                   } else {
                     Navigator.pushAndRemoveUntil(
                       context,
@@ -148,7 +151,7 @@ class _OtpScreenState extends State<OtpScreen> {
                     mainAxisSize: MainAxisSize.min,
                     children: [
                       Text(
-                        "Verify OTP",
+                        context.translate("verify_otp"),
                         style: context.subtitle.copyWith(
                           color: AppColor.lightBackground,
                         ),

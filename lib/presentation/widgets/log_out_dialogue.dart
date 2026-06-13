@@ -1,5 +1,6 @@
 // ignore_for_file: unused_local_variable
 import 'package:myFevTempV1/data/constant/app_text_style.dart';
+import 'package:myFevTempV1/presentation/localization/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -41,9 +42,9 @@ class LogOutDialogue {
                   ),
                 ),
                 SizedBox(height: 10),
-                Text("Sign out from Moment", style: context.heading),
+                Text(context.translate("sign_out_moment"), style: context.heading),
                 Text(
-                  "Are you sure you would like to sign out of \nyour Moment account?",
+                  context.translate("logout_confirm"),
                   style: context.label.copyWith(
                     color: context.textSecondaryColor,
                     fontWeight: FontWeight.w400,
@@ -54,7 +55,7 @@ class LogOutDialogue {
                   children: [
                     Expanded(
                       child: CustomButton(
-                        text: "Noo, Cancel",
+                        text: context.translate("cancel"),
                         onTap: () => Navigator.pop(context),
 
                         backgroundColor: AppColor.darkBorder,
@@ -78,7 +79,7 @@ class LogOutDialogue {
                         return Expanded(
                           child: CustomButton(
                             backgroundColor: Colors.red,
-                            text: "Yes, Signout",
+                            text: context.translate("yes_signout"),
                             onTap: () async {
                               // String token = await AuthRepo().getToken() ?? "";
                               // if (token.isNotEmpty) {
